@@ -1,2 +1,2 @@
-# hhv6_assembler
-Pipeline for the denovo assembly of the virus hhv6
+# cytomegaloassembler
+Pipeline for the denovo assembly of the cytomegalovirus genome

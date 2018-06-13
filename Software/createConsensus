@@ -1,0 +1,6 @@
+echo "Usage"
+echo "createConsensus reference.fasta alignment_sorted.bam\n\n\n"
+samtools mpileup -uf $1 $2 | bcftools call -mv -Oz -o calls.vcf.gz
+tabix calls.vcf.gz
+cat $1 | bcftools consensus calls.vcf.gz > $1_con.fasta
+

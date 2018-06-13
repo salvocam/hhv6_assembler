@@ -1,0 +1,17 @@
+./bwa index toElong.fasta
+./bwa aln toElong.fasta $2 -t 8 > read1.sai
+./bwa aln toElong.fasta $3 -t 8 > read2.sai
+./bwa sampe toElong.fasta read1.sai read2.sai $2 $3 > $1.sam
+samtools view -bS $1.sam >$1.bam
+samtools view -b -F 8 -f 4 $1.bam > unmapped.bam
+bedtools bamtofastq -i unmapped.bam -fq unmapped.fastq
+fastq_to_fasta -i unmapped.fastq -o unmapped.fasta -Q33
+cat toElong.fasta unmapped.fasta > tmp1 
+mv tmp1 unmapped.fasta
+phrap unmapped.fasta
+rm -f $1.*
+rm -f *.bam *.sam *.sai *.fastq
+
+
+
+

@@ -1,0 +1,14 @@
+mkdir $4$1
+bwa aln  ./1_consensusRetriever/hcmv_genome.fasta $2 -n $5 -t $6> read1.sai
+bwa aln  ./1_consensusRetriever/hcmv_genome.fasta $3 -n $5 -t $6> read2.sai
+bwa sampe ./1_consensusRetriever/hcmv_genome.fasta read1.sai read2.sai $2 $3 > $1.sam
+samtools view -bS $1.sam >  $1.bam
+samtools sort -o $1_sorted.bam $1.bam
+samtools index $1_sorted.bam 
+createConsensus ./1_consensusRetriever/hcmv_genome.fasta  $1_sorted.bam
+mv *.bam $4$1
+mv ./1_consensusRetriever/hcmv_genome.fasta_con.fasta $4$1
+mv *.bai $4$1
+mv call* $4$1
+rm -f *.sai *.sam
+
